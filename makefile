@@ -1,12 +1,19 @@
-CXX=g++
-CXXFLAGS=-std=c++17 -Wall -Iinclude -I/usr/include/SFML
-LDFLAGS=-lsfml-graphics -lsfml-window -lsfml-system
+CXX = g++
+CXXFLAGS = -std=c++11 -Wall -I. # Include directory flags here
+LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system # Linker flags for SFML
 
-all: main
+# Source files
+SOURCES = Demo.cpp TestCounter.cpp tree.cpp
+OBJECTS = $(SOURCES:.cpp=.o)
+EXECUTABLE = demo
 
-main: src/main.cpp
-	$(CXX) $(CXXFLAGS) src/main.cpp -o main $(LDFLAGS)
+all: $(EXECUTABLE)
+
+$(EXECUTABLE): $(OBJECTS)
+	$(CXX) $(OBJECTS) -o $@ $(LDFLAGS)
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f main
-all
+	rm -f *.o $(EXECUTABLE)

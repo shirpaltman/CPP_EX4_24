@@ -6,16 +6,20 @@
 using namespace std;
 template<typename T>
 class Node {
+    
+public:
+
     T data;
     vector<shared_ptr<Node<T>>> children;
-public:
+
+
     //Constructor
-    Node(T val) : data(data){}
+    explicit Node(T data) : data(data){}
 
     //Method to add a child node
-    void add_child(shared_ptr<Node<T>> child)[
+    void add_child(shared_ptr<Node<T>> child){
         children.push_back(child);
-    ]
+    }
     T get_data() const {
         return data;
     }

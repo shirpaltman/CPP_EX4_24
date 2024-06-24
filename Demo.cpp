@@ -5,6 +5,7 @@
 #include <string>
 #include "node.hpp"
 #include "tree.hpp"
+#include <SFML/Graphics.hpp>
 
 using namespace std;
 
