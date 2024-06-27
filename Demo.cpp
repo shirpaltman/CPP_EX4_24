@@ -82,13 +82,26 @@ int main()
 
     // cout << tree; // Should print the graph using GUI.
 
-    // Tree<double,3> three_ary_tree; // 3-ary tree.
-    // three_ary_tree.add_root(root_node);
-    // three_ary_tree.add_sub_node(root_node, n1);
-    // three_ary_tree.add_sub_node(root_node, n2);
-    // three_ary_tree.add_sub_node(root_node, n3);
-    // three_ary_tree.add_sub_node(n1, n4);
-    // three_ary_tree.add_sub_node(n2, n5);
+    // Create a 3-ary tree
+    // Tree<double> three_ary_tree(3); 
+    // three_ary_tree.add_root(1.1);
+    // auto root3 = three_ary_tree.get_root();
+
+    // // Adding children to the root
+    // three_ary_tree.add_sub_node(root3, 1.2);
+    // three_ary_tree.add_sub_node(root3, 1.3);
+    // three_ary_tree.add_sub_node(root3, 1.4);  // Third child
+
+    // // Adding children to the first child
+    // auto first_child = root->children[0];
+    // three_ary_tree.add_sub_node(first_child, 1.5);
+    // three_ary_tree.add_sub_node(first_child, 1.6);
+
+    // // Attempt to add a fourth child to root (should fail since it's a 3-ary tree)
+    // bool added = three_ary_tree.add_sub_node(root3, 1.7);
+    // if (!added) {
+    //     std::cout << "Failed to add more than 3 children to the root node.\n";
+    // }
 
      // The tree should look like:
     /**
@@ -99,4 +112,25 @@ int main()
      *  1.5      1.6
      */
     
+
+
+
+    Tree<double> three_ary_tree(3); // Initialize a 3-ary tree
+    auto rootH = three_ary_tree.get_root();
+    three_ary_tree.add_root(1.1);  // Setting the root
+    rootH = three_ary_tree.get_root();
+
+    three_ary_tree.add_sub_node(rootH, 1.2);
+    three_ary_tree.add_sub_node(rootH, 1.3);
+    three_ary_tree.add_sub_node(rootH, 1.4);
+
+    // Attempt to add a fourth child to the root
+    bool added = three_ary_tree.add_sub_node(rootH, 1.5);
+    if (!added) {
+        cout << "Failed to add more than 3 children to the root node.\n";
+    }
+
+    // Print the tree structure
+    three_ary_tree.printTree();
+
 }

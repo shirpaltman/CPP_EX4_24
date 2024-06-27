@@ -14,7 +14,7 @@ public:
 
 
     //Constructor
-    explicit Node(T data) : data(data){}
+    Node(T data) : data(data){}
 
     //Method to add a child node
     void add_child(shared_ptr<Node<T>> child){

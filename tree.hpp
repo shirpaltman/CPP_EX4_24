@@ -13,13 +13,13 @@ template<typename T>
 class Tree {
 private:
     shared_ptr<Node<T>> root;
-
+    size_t max_children;
 public:
 
     ~Tree(){
         root.reset();
     }
-    Tree() : root(nullptr) {}
+    Tree(size_t k=2) : root(nullptr) ,max_children(k) {}
 
     void add_root(const T& data) {
         root = make_shared<Node<T>>(data);
@@ -33,11 +33,65 @@ public:
         return root;
     }
 
-    void add_sub_node( shared_ptr<Node<T>>& parent_node,  T data) {
-        if (!parent_node) return;
-        auto child= make_shared<Node<T>>(data);
-        parent_node->add_child(child);
+    bool add_sub_node( shared_ptr<Node<T>>& parent_node,  T data) {
+        if(parent_node && parent_node-> children.size()<max_children){
+            parent_node->children.push_back(make_shared<Node<T>>(data));
+            return true;
+        }
+        return false;
     }
+
+    void printTree() {
+        if (!root) {
+            std::cout << "The tree is empty." << std::endl;
+            return;
+        }
+
+        queue<shared_ptr<Node<T>>> queue;
+        queue.push(root);
+        while (!queue.empty()) {
+            int levelSize = queue.size();
+            for (int i = 0; i < levelSize; ++i) {
+                auto node = queue.front();
+                queue.pop();
+                std::cout << node->data << " has children: ";
+                for (auto& child : node->children) {
+                    std::cout << child->data << " ";
+                    queue.push(child);
+                }
+                std::cout << std::endl;
+            }
+            std::cout << "-----" << std::endl;
+        }
+    }
+    
+
+
+    void heapify(shared_ptr<Node<T>> node){
+        if (!node) return;
+        for(auto child : node->children){
+            heapify(child);
+            if(child->data < node->data){
+                swap(child->data, node->data);
+            }
+        }
+    }
+
+    void myHeap(){
+        if (!root) return;
+        queue<shared_ptr<Node<T>>> queue;
+        queue.push(root);
+        while(!queue.empty()){
+            auto node = queue.front();
+            queue.pop();
+            heapify(node);
+            for(auto child : node->children){
+                queue.push(child);
+            }
+        }
+    }
+
+    
 
 class PreOrderIterator {
     stack<shared_ptr<Node<T>>> nodeStack;
@@ -223,6 +277,9 @@ class DFSIterator{
             return nodeStack.top()->data;
         }
     };
+
+
+
 
 
 
