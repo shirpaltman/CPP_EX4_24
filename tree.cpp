@@ -1,7 +1,7 @@
 #include "tree.hpp"
 #include "node.hpp"
 #include <SFML/Graphics.hpp>
-using  namespace sf;
+using namespace sf;
 using namespace std;
 
 void drawTree(const Tree<double>& tree, RenderWindow& window, shared_ptr<Node<double>> node, int x, int y, int level = 0) {
