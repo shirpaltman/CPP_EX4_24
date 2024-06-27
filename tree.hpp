@@ -154,6 +154,78 @@ class PostOrderIterator {
 
 
 
+    class InOrderIterator {
+    private:
+        std::stack<std::shared_ptr<Node<T>>> stack;
+        std::shared_ptr<Node<T>> currentNode;
+
+    public:
+        InOrderIterator(std::shared_ptr<Node<T>> node) : currentNode(node) {
+            pushLeftMost(node); // Initially push all left children to stack
+        }
+
+        void pushLeftMost(std::shared_ptr<Node<T>> node) {
+            // Push all left children to the stack
+            while (node != nullptr) {
+                stack.push(node);
+                if (!node->children.empty()) {
+                    node = node->children[0]; // Assuming left child is always the first child
+                } else {
+                    break; // No more children, stop the loop
+                }
+            }
+        }
+
+        bool operator!=(const InOrderIterator& other) const {
+            return !stack.empty(); // Continue until stack is not empty
+        }
+
+        InOrderIterator& operator++() {
+            shared_ptr<Node<T>> node = stack.top();
+            stack.pop();
+            if (node->children.size() > 1) {
+                pushLeftMost(node->children[1]); // Assuming right child is the second child
+            }
+            return *this;
+        }
+
+        T& operator*() const {
+            return stack.top()->data;
+        }
+    
+};
+
+
+class DFSIterator{
+    private:
+        stack<shared_ptr<Node<T>>> nodeStack;
+    public:
+        DFSIterator(shared_ptr<Node<T>> root){
+            if(root) nodeStack.push(root);
+        }
+
+        bool operator != (const DFSIterator& other )const{
+            return !nodeStack.empty();
+        }
+
+        DFSIterator& operator++(){
+            if(!nodeStack.empty()){
+                auto node = nodeStack.top();
+                nodeStack.pop();
+                for(auto it = node->children.rbegin();it !=node->children.rend(); ++it){
+                    nodeStack.push(*it);
+                }
+            }
+            return *this;
+        }
+
+        T& operator*() const{
+            return nodeStack.top()->data;
+        }
+    };
+
+
+
 
 PreOrderIterator begin_pre_order(){ return PreOrderIterator(root);}
 PreOrderIterator end_pre_order(){return PreOrderIterator(nullptr);}
@@ -164,8 +236,12 @@ BFSIterator end_bfs_scan(){return BFSIterator(nullptr);}
 PostOrderIterator begin_post_order(){return PostOrderIterator(root);}
 PostOrderIterator end_post_order(){return PostOrderIterator(nullptr);}
 
+InOrderIterator begin_in_order() { return InOrderIterator(root); }
+InOrderIterator end_in_order() { return InOrderIterator(nullptr); }
+
+
+DFSIterator begin_dfs_scan() { return DFSIterator(root); }
+DFSIterator end_dfs_scan() { return DFSIterator(nullptr); }
+
 };  
-
-   
-
 #endif // TREE_HPP

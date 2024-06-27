@@ -45,10 +45,15 @@ int main()
     }
     cout << endl; // prints: 1.4, 1.5, 1.2, 1.6, 1.3, 1.1
 
-    // for (auto node = tree.begin_in_order(); node != tree.end_in_order(); ++node)
-    // {
-    //     cout << node->get_value() << endl;
-    // } // prints: 1.4, 1.2, 1.5, 1.1, 1.6, 1.3
+
+
+    cout <<"In-order Traversal of the Binary Tree:" << endl;
+
+    for (auto it = tree.begin_in_order(); it != tree.end_in_order(); ++it)
+    {
+        cout << *it << " ";
+    }
+    cout << endl; // prints: 1.4, 1.2, 1.5, 1.1, 1.6, 1.3
 
 
     cout <<"BFS Traversal of the Binary Tree:" << endl;
@@ -58,6 +63,17 @@ int main()
     } 
     cout << endl; 
     // prints: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6
+
+
+    cout << "DFS Traversal of the Binary Tree:" << endl;
+    for (auto it = tree.begin_dfs_scan(); it != tree.end_dfs_scan(); ++it) {
+        cout << *it << " ";
+    }
+    cout << endl;
+    // Expected output: 1.1, 1.2, 1.4, 1.5, 1.3, 1.6
+
+
+
 
     // for (auto node : tree)
     // {
