@@ -1,6 +1,7 @@
 CXX = g++
 CXXFLAGS = -std=c++11 -Wall -I.
 LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
+VALGRIND = valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes
 
 all: demo testcounter
 
@@ -12,6 +13,9 @@ testcounter: TestCounter.o tree.o
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+check: demo
+	$(VALGRIND) ./demo
 
 clean:
 	rm -f *.o demo testcounter

@@ -16,9 +16,6 @@ private:
     size_t max_children;
 public:
 
-    ~Tree(){
-        root.reset();
-    }
     Tree(size_t k=2) : root(nullptr) ,max_children(k) {}
 
     void add_root(const T& data) {
