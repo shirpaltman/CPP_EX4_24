@@ -13,24 +13,16 @@ template<typename T>
 class TreeVisualizer{
 public:
     
-    void showTree(const shared_ptr<Node<T>>& root ,RenderWindow& window) {
+    void showTree(const shared_ptr<Node<T>>& root,RenderWindow& window, const Font& font ) {
         if(!root) return;
-        Font font;
-        if (!font.loadFromFile("/home/shiraltman/Downloads/Roboto-BoldItalic.ttf")) {
-            cerr << "Error loading font\n";
-            return;
-        }
+       // Start by clearing the window with a background color
+        window.clear(Color::Black); // Change the color as needed
 
-        while (window.isOpen()) {
-            Event event;
-            while (window.pollEvent(event)) {
-                if (event.type == Event::Closed)
-                    window.close();
-            }
-            window.clear();
-            drawTree(window, root, font, 400, 50, 0);
-            window.display();
-        }
+        // Call the recursive drawTree method to draw the tree starting from the root
+        drawTree(window, root, font, 400, 50, 0); // Adjust the initial position and level as needed
+
+        // Finally, display everything we have drawn
+        window.display();
     }
 
 private:
