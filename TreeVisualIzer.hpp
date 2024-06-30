@@ -34,23 +34,27 @@ public:
     }
 
 private:
-    void drawTree(RenderWindow& window, shared_ptr<Node<T>> node, const Font& font, int x, int y, int level) {
+    void drawTree(RenderWindow& window, shared_ptr<Node<T>> node, const Font& font, int x, int y, int level=0) {
         if (!node) return;
 
-        constexpr int HORIZONTAL_SPACING = 80;
-        constexpr int VERTICAL_SPACING = 50;
-        const int RADIUS = 50;
+        int HORIZONTAL_SPACING = 100 / (level +1);
+        int VERTICAL_SPACING = 75;
+        const int RADIUS = 30;
         int childrenCount = node->get_children().size();
 
-        // Draw the node itself
-        CircleShape shape(RADIUS);
-        shape.setFillColor(Color::White);
-        shape.setPosition(x - RADIUS / 2, y - RADIUS / 2);
+        
 
         // Draw the value inside the node
         Text text(to_string(node->get_data()), font, 20);
         float textWidth = text.getLocalBounds().width;
+        text.setFillColor(Color::White);
         text.setPosition(x - textWidth / 2, y - 10);
+
+        // Draw the node itself
+        CircleShape shape(RADIUS);
+        shape.setFillColor(Color::Green);
+        shape.setPosition(x-RADIUS, y-RADIUS);
+        //text.setPosition(x - textWidth / 2, y - textHeight/ 2);
 
         for (int i = 0; i < childrenCount; i++) {
             int offset = (i - childrenCount / 2) * (level + 1) * HORIZONTAL_SPACING;
@@ -59,8 +63,8 @@ private:
 
             // Draw line to child
             Vertex line[] = {
-                Vertex(Vector2f(x, y + RADIUS)),
-                Vertex(Vector2f(childX, childY - RADIUS))
+                Vertex(Vector2f(x, y + RADIUS),Color::White),
+                Vertex(Vector2f(childX, childY - RADIUS),Color::White)
             };
 
             window.draw(line, 2, Lines);
