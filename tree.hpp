@@ -30,7 +30,7 @@ public:
         return root;
     }
 
-    bool add_sub_node( shared_ptr<Node<T>>& parent_node,  T data) {
+    bool add_sub_node( shared_ptr<Node<T>>& parent_node,  const T& data) {
         if(parent_node && parent_node-> children.size()<max_children){
             parent_node->children.push_back(make_shared<Node<T>>(data));
             return true;

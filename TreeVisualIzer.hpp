@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include<sstream>
 #include "node.hpp" // Ensure this is the correct path to your Node template class
 
 
@@ -29,11 +30,16 @@ private:
     void drawTree(RenderWindow& window, shared_ptr<Node<T>> node, const Font& font, int x, int y, int level=0) {
         if (!node) return;
 
-    constexpr int BASE_SPACING = 555;  // Base horizontal spacing
-    int spacing = BASE_SPACING / (level + 1);  // Adjust spacing based on level
-    constexpr int VERTICAL_SPACING = 100;
-    const int RADIUS = 38;
-    int childrenCount = node->get_children().size();
+        ostringstream os;
+        os << node->get_data();  // This uses the overloaded << operator if available
+        string nodeText = os.str();  // Convert the ostringstream to string
+
+
+        constexpr int BASE_SPACING = 555;  // Base horizontal spacing
+        int spacing = BASE_SPACING / (level + 1);  // Adjust spacing based on level
+        constexpr int VERTICAL_SPACING = 100;
+        const int RADIUS = 38;
+        int childrenCount = node->get_children().size();
 
     
 
@@ -45,7 +51,7 @@ private:
         
 
         // Draw the value inside the node
-        Text text(to_string(node->get_data()), font, 17);
+        Text text(nodeText, font, 17);
         float textWidth = text.getLocalBounds().width;
         float textHeight = text.getLocalBounds().height;
 
@@ -63,7 +69,7 @@ private:
 
 
         int childX = startX;
-        for (int i = 0; i < childrenCount; ++i) {
+        for (size_t i = 0; i < childrenCount; ++i) {
             int childY = y + VERTICAL_SPACING;
 
             // Draw line to child

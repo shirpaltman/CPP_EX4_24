@@ -8,6 +8,8 @@
 #include "tree.hpp"
 #include <SFML/Graphics.hpp>
 #include "TreeVisualIzer.hpp"
+#include "Complex.hpp" 
+
 
 using namespace std;
 using namespace sf;
@@ -103,10 +105,28 @@ int main()
     complexTree.add_sub_node(node2, 10);
     complexTree.add_sub_node(node2, 11);
 
+   
+    Tree<Complex> complexTreeC;
+    complexTreeC.add_root(Complex(1.1, 2.2));
+    auto complexRootC = complexTreeC.get_root();
+    complexTreeC.add_sub_node(complexRootC, Complex(3.3, 4.4));
+    complexTreeC.add_sub_node(complexRootC, Complex(5.5, 6.6));
+
+    // Assuming the Complex class has an operator<< defined
+    // Let's print the Complex numbers stored in the tree
+    cout << "Pre-Order Traversal of the Complex Tree:" << endl;
+    for (auto it = complexTree.begin_pre_order(); it != complexTree.end_pre_order(); ++it) {
+        cout << *it << " ";
+    }
+    cout << endl;
+
+
+
 
 
     TreeVisualizer<double> visualizer;
     TreeVisualizer<int> visualizerI;
+    TreeVisualizer<Complex> visualizerC;
     
     Font font;
     if (!font.loadFromFile("/home/shiraltman/Downloads/Roboto-BoldItalic.ttf")) {
@@ -155,9 +175,58 @@ int main()
         visualizer.showTree(three_ary_tree.get_root(),three_ary_window,font);
         three_ary_window.display();
     }
-        
-    
 
+    RenderWindow complex_window(VideoMode(800, 600), "complex Tree Visualization");
+    while (complex_window.isOpen()) {
+        Event event;
+        while (complex_window.pollEvent(event)) {
+            if (event.type == Event::Closed)
+                complex_window.close();
+        }
+
+        complex_window.clear(Color::Black);
+        visualizerC.showTree(complexTreeC.get_root(),complex_window,font);
+        complex_window.display();
+    }
+        
+    // Pre-order Traversal
+    cout << "Pre-order Traversal of the Complex Tree:" << endl;
+    for (auto it = complexTreeC.begin_pre_order(); it != complexTreeC.end_pre_order(); ++it){
+        cout << *it << "   ";
+    }
+    cout << endl;
+
+    // Post-order Traversal
+    cout << "Post-order Traversal of the Complex Tree:" << endl;
+    for (auto it = complexTreeC.begin_post_order(); it != complexTreeC.end_post_order(); ++it) {
+        cout << *it << "   ";
+    }
+    cout << endl;
+
+    // In-order Traversal (for binary trees, if implemented)
+    cout << "In-order Traversal of the Complex Tree:" << endl;
+    for (auto it = complexTreeC.begin_in_order(); it != complexTreeC.end_in_order(); ++it) {
+        cout << *it << "    ";
+    }
+    cout << endl;
+
+    // BFS Traversal
+    cout << "BFS Traversal of the Complex Tree:" << endl;
+    for (auto it = complexTreeC.begin_bfs_scan(); it != complexTreeC.end_bfs_scan(); ++it) {
+        cout << *it << "   ";
+    }
+    cout << endl;
+
+    // DFS Traversal
+    cout << "DFS Traversal of the Complex Tree:" << endl;
+    for (auto it = complexTreeC.begin_dfs_scan(); it != complexTreeC.end_dfs_scan(); ++it) {
+        cout << *it << "   ";
+    }
+    cout << endl;
+
+
+    
+    cout << "Pre-order Traversal of the Tree:" << endl;
     for (auto it = tree.begin_pre_order(); it != tree.end_pre_order(); ++it){
         cout << *it << " ";
             
