@@ -10,7 +10,7 @@ using namespace sf;
 using namespace std;
 
 template<typename T>
-class TreeVisualizer {
+class TreeVisualizer{
 public:
     
     void showTree(const shared_ptr<Node<T>>& root ,RenderWindow& window) {
@@ -37,28 +37,41 @@ private:
     void drawTree(RenderWindow& window, shared_ptr<Node<T>> node, const Font& font, int x, int y, int level=0) {
         if (!node) return;
 
-        int HORIZONTAL_SPACING = 100 / (level +1);
-        int VERTICAL_SPACING = 75;
-        const int RADIUS = 30;
-        int childrenCount = node->get_children().size();
+    constexpr int BASE_SPACING = 555;  // Base horizontal spacing
+    int spacing = BASE_SPACING / (level + 1);  // Adjust spacing based on level
+    constexpr int VERTICAL_SPACING = 100;
+    const int RADIUS = 45;
+    int childrenCount = node->get_children().size();
+
+    
+
+
+        // Calculate horizontal spacing based on the number of children
+        int offsetIncrement = spacing/ (childrenCount + 1);
+        int startX = x - (childrenCount - 1) * offsetIncrement / 2;
 
         
 
         // Draw the value inside the node
-        Text text(to_string(node->get_data()), font, 20);
+        Text text(to_string(node->get_data()), font, 22);
         float textWidth = text.getLocalBounds().width;
+        float textHeight = text.getLocalBounds().height;
+
         text.setFillColor(Color::White);
-        text.setPosition(x - textWidth / 2, y - 10);
+        text.setPosition(x - textWidth / 2, y - textHeight/2);
 
         // Draw the node itself
         CircleShape shape(RADIUS);
         shape.setFillColor(Color::Green);
         shape.setPosition(x-RADIUS, y-RADIUS);
-        //text.setPosition(x - textWidth / 2, y - textHeight/ 2);
 
-        for (int i = 0; i < childrenCount; i++) {
-            int offset = (i - childrenCount / 2) * (level + 1) * HORIZONTAL_SPACING;
-            int childX = x + offset;
+        
+        window.draw(shape);
+        window.draw(text);
+
+
+        int childX = startX;
+        for (int i = 0; i < childrenCount; ++i) {
             int childY = y + VERTICAL_SPACING;
 
             // Draw line to child
@@ -69,11 +82,10 @@ private:
 
             window.draw(line, 2, Lines);
             drawTree(window, node->get_children()[i], font, childX, childY, level + 1);
+            childX += offsetIncrement;
         }
-
-        window.draw(shape);
-        window.draw(text);
     }
+    
 };
 
 #endif // TREE_VISUALIZER_HPP
