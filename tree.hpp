@@ -15,7 +15,7 @@ private:
     shared_ptr<Node<T>> root;
     size_t max_children;
 public:
-
+    
     Tree(size_t k=2) : root(nullptr) ,max_children(k) {}
 
     void add_root(const T& data) {

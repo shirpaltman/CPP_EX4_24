@@ -7,6 +7,12 @@
 #include "node.hpp"
 #include "tree.hpp"
 #include <SFML/Graphics.hpp>
+#include "TreeVisualIzer.hpp"
+
+using namespace std;
+using namespace sf;
+
+
 
 using namespace std;
 
@@ -32,10 +38,42 @@ int main()
      *  1.4  1.5  1.6
      */
 
-    for (auto it = tree.begin_pre_order(); it != tree.end_pre_order(); ++it){
-        cout << *it << endl;
-    }  //prints: 1.1, 1.2, 1.4, 1.5, 1.3, 1.6
+    TreeVisualizer<double> visualizer;
+    RenderWindow window(VideoMode(800, 600), "Tree Traversals Visualization");
+    Font font;
+    if (!font.loadFromFile("/home/shiraltman/Downloads/Roboto-BoldItalic.ttf")) {
+        cerr << "Failed to load font\n";
+        return -1;
+    }
 
+     // Display each traversal with visual output
+    while (window.isOpen()) {
+        Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == Event::Closed)
+                window.close();
+        }
+
+        window.clear(Color::Blue);
+
+        // Visualize the tree
+        visualizer.showTree(tree.get_root(), window);
+
+        // Display window contents
+        window.display();
+ 
+
+
+    for (auto it = tree.begin_pre_order(); it != tree.end_pre_order(); ++it){
+        cout << *it << " ";
+            window.display();
+            // Optionally, pause or slow down the display here
+        }
+        cout << endl;
+
+        // Display updates and wait for close
+        window.display();
+    }
 
     //Display post-order traversal
     cout <<"Post-order Traversal of the Binary Tree:" << endl;
