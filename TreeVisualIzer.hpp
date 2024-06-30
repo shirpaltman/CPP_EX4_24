@@ -32,7 +32,7 @@ private:
     constexpr int BASE_SPACING = 555;  // Base horizontal spacing
     int spacing = BASE_SPACING / (level + 1);  // Adjust spacing based on level
     constexpr int VERTICAL_SPACING = 100;
-    const int RADIUS = 45;
+    const int RADIUS = 38;
     int childrenCount = node->get_children().size();
 
     
@@ -45,7 +45,7 @@ private:
         
 
         // Draw the value inside the node
-        Text text(to_string(node->get_data()), font, 22);
+        Text text(to_string(node->get_data()), font, 17);
         float textWidth = text.getLocalBounds().width;
         float textHeight = text.getLocalBounds().height;
 

@@ -36,14 +36,34 @@ int main()
      */
 
 
-    Tree<double> three_ary_tree(3); // Initialize a 3-ary tree
-    auto rootH = three_ary_tree.get_root();
-    three_ary_tree.add_root(1.1);  // Setting the root
-    rootH = three_ary_tree.get_root();
+    // Tree<double> three_ary_tree(3); // Initialize a 3-ary tree
+    // auto rootH = three_ary_tree.get_root();
+    // three_ary_tree.add_root(1.1);  // Setting the root
+    // rootH = three_ary_tree.get_root();
 
+    // three_ary_tree.add_sub_node(rootH, 1.2);
+    // three_ary_tree.add_sub_node(rootH, 1.3);
+    // three_ary_tree.add_sub_node(rootH, 1.4);
+
+
+
+    // Initialize a 3-ary tree
+    Tree<double> three_ary_tree(3); 
+    three_ary_tree.add_root(1.1);  // Setting the root
+    auto rootH = three_ary_tree.get_root();  // Fetch the root node
+
+    // Adding children to the root
     three_ary_tree.add_sub_node(rootH, 1.2);
     three_ary_tree.add_sub_node(rootH, 1.3);
-    three_ary_tree.add_sub_node(rootH, 1.4);
+    three_ary_tree.add_sub_node(rootH, 1.4);  // Third child to root
+
+    // Adding children to the first child of the root (1.2)
+    auto first_child = rootH->get_children()[0];  // This is node 1.2
+    three_ary_tree.add_sub_node(first_child, 1.5);
+
+    // Adding a child to the second child of the root (1.3)
+    auto second_child = rootH->get_children()[1];  // This is node 1.3
+    three_ary_tree.add_sub_node(second_child, 1.6);
 
 
      // The tree should look like:
@@ -60,8 +80,34 @@ int main()
     if (!added) {
         cout << "Failed to add more than 3 children to the root node.\n";
     }
+    
+    
+    Tree<int> complexTree(5); // Initialize a 5-ary tree using int
+
+    // Set the root
+    complexTree.add_root(1);
+    auto rootD = complexTree.get_root();
+
+    // Manually add children to the root
+    complexTree.add_sub_node(rootD, 2);
+    complexTree.add_sub_node(rootD, 3);
+    complexTree.add_sub_node(rootD, 4);
+    complexTree.add_sub_node(rootD, 5);
+    complexTree.add_sub_node(rootD, 6);
+
+    // Manually add children to Node 2
+    auto node2 = rootD->get_children()[0];
+    complexTree.add_sub_node(node2, 7);
+    complexTree.add_sub_node(node2, 8);
+    complexTree.add_sub_node(node2, 9);
+    complexTree.add_sub_node(node2, 10);
+    complexTree.add_sub_node(node2, 11);
+
+
 
     TreeVisualizer<double> visualizer;
+    TreeVisualizer<int> visualizerI;
+    
     Font font;
     if (!font.loadFromFile("/home/shiraltman/Downloads/Roboto-BoldItalic.ttf")) {
         cerr << "Failed to load font\n";
@@ -82,7 +128,21 @@ int main()
         window.display();
     }
 
-    // Create a separate window for the 3-ary tree visualization
+    // Create a separate window for the 5-ary tree visualization
+    RenderWindow complexTree_window(VideoMode(800, 600), "5-ary Tree Visualization");
+    while (complexTree_window.isOpen()) {
+        Event event;
+        while (complexTree_window.pollEvent(event)) {
+            if (event.type == Event::Closed)
+                complexTree_window.close();
+        }
+
+        complexTree_window.clear(Color::Black);
+        visualizerI.showTree(complexTree.get_root(),complexTree_window,font);
+        complexTree_window.display();
+    }
+
+
     RenderWindow three_ary_window(VideoMode(800, 600), "3-ary Tree Visualization");
     while (three_ary_window.isOpen()) {
         Event event;
