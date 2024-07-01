@@ -35,27 +35,6 @@ This C++ library provides a comprehensive solution for creating, visualizing, an
 
 ---
 
-## Project Structure
-
-tree-visualization/
-├── src/
-│   ├── tree.cpp
-│   ├── node.cpp
-│   ├── Demo.cpp
-│   ├── Test.cpp
-│   ├── TestCounter.cpp
-│   └── TreeVisualizer.cpp
-├── include/
-│   ├── tree.hpp
-│   ├── node.hpp
-│   └── TreeVisualizer.hpp
-├── Makefile
-├── README.md
-└── .gitignore
-
-
-
----
 
 ## Features
 
