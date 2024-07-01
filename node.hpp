@@ -20,7 +20,7 @@ public:
     void add_child(shared_ptr<Node<T>> child){
         children.push_back(child);
     }
-    T get_data() const {
+     const T& get_data() const {
         return data;
     }
 

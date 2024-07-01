@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <numeric>
 
 using namespace std;
 
@@ -203,5 +204,227 @@ TEST_CASE("Test DFSIterator with Doubles") {
     std::vector<double> expected = {1.1, 1.2, 1.4, 1.5, 1.3, 1.6};
     CHECK(values == expected);
 }
+
+
+TEST_CASE("Test PreOrderIterator with Doubles") {
+    Tree<double> tree;
+    tree.add_root(1.1);
+    auto root = tree.get_root();
+    tree.add_sub_node(root, 1.2);
+    tree.add_sub_node(root, 1.3);
+
+    auto& children = root->get_children();
+    tree.add_sub_node(children[0], 1.4);
+    tree.add_sub_node(children[0], 1.5);
+    tree.add_sub_node(children[1], 1.6);
+
+    std::vector<double> values;
+    for (auto it = tree.begin_pre_order(); it != tree.end_pre_order(); ++it) {
+        values.push_back(*it);
+    }
+    std::vector<double> expected = {1.1, 1.2, 1.4, 1.5, 1.3, 1.6};
+    CHECK(values == expected);
+}
+
+TEST_CASE("Test InOrderIterator with Only Root Node") {
+    Tree<int> tree;
+    tree.add_root(1);
+    vector<int> values;
+    for (auto it = tree.begin_in_order(); it != tree.end_in_order(); ++it) {
+        values.push_back(*it);
+    }
+    vector<int> expected = {1};
+    CHECK(values == expected);
+}
+
+
+TEST_CASE("Test InOrderIterator with Two Levels") {
+    Tree<int> tree(2);
+    tree.add_root(1);
+    auto root = tree.get_root();
+    tree.add_sub_node(root, 2);
+    tree.add_sub_node(root, 3);
+
+    vector<int> values;
+    for (auto it = tree.begin_in_order(); it != tree.end_in_order(); ++it) {
+        values.push_back(*it);
+    }
+
+    vector<int> expected = {2, 1, 3};
+    CHECK(values == expected);
+}
+
+TEST_CASE("Test PreOrderIterator with Doubles in 3-ary Tree") {
+    Tree<double> tree(3);
+    tree.add_root(1.1);
+    auto root = tree.get_root();
+    tree.add_sub_node(root, 1.2);
+    tree.add_sub_node(root, 1.3);
+    tree.add_sub_node(root, 1.4);
+
+    auto& children = root->get_children();
+    tree.add_sub_node(children[0], 1.5);
+    tree.add_sub_node(children[0], 1.6);
+    tree.add_sub_node(children[1], 1.7);
+    tree.add_sub_node(children[1], 1.8);
+    tree.add_sub_node(children[2], 1.9);
+
+    std::vector<double> values;
+    for (auto it = tree.begin_pre_order(); it != tree.end_pre_order(); ++it) {
+        values.push_back(*it);
+    }
+
+    std::vector<double> expected = {1.1, 1.2, 1.5, 1.6, 1.3, 1.7, 1.8, 1.4, 1.9};
+    CHECK(values == expected);
+}
+
+TEST_CASE("Test PreOrderIterator with Only Root Node") {
+    Tree<int> tree;
+    tree.add_root(1);
+    std::vector<int> values;
+    for (auto it = tree.begin_pre_order(); it != tree.end_pre_order(); ++it) {
+        values.push_back(*it);
+    }
+    std::vector<int> expected = {1};
+    CHECK(values == expected);
+}
+
+TEST_CASE("Test PreOrderIterator with Two Levels") {
+    Tree<int> tree(2);
+    tree.add_root(1);
+    auto root = tree.get_root();
+    tree.add_sub_node(root, 2);
+    tree.add_sub_node(root, 3);
+
+    vector<int> values;
+    for (auto it = tree.begin_pre_order(); it != tree.end_pre_order(); ++it) {
+        values.push_back(*it);
+    }
+
+    vector<int> expected = {1, 2, 3};
+    CHECK(values == expected);
+}
+
+TEST_CASE("Test Tree with Complex Numbers using PreOrderIterator") {
+    Tree<Complex> tree;
+    tree.add_root(Complex(1.1, 2.2));
+    auto root = tree.get_root();
+    tree.add_sub_node(root, Complex(3.3, 4.4));
+    tree.add_sub_node(root, Complex(5.5, 6.6));
+
+    auto& children = root->get_children();
+    tree.add_sub_node(children[0], Complex(7.7, 8.8));
+    tree.add_sub_node(children[0], Complex(9.9, 10.10));
+
+    vector<Complex> values;
+    for (auto it = tree.begin_pre_order(); it != tree.end_pre_order(); ++it) {
+        values.push_back(*it);
+    }
+
+    vector<Complex> expected = {Complex(1.1, 2.2), Complex(3.3, 4.4), Complex(7.7, 8.8), Complex(9.9, 10.10), Complex(5.5, 6.6)};
+    CHECK(values == expected);
+}
+
+TEST_CASE("Test PostOrderIterator with Doubles in 3-ary Tree") {
+
+    Tree<double> tree(3);
+    tree.add_root(1.1);
+    auto root = tree.get_root();
+    tree.add_sub_node(root, 1.2);
+    tree.add_sub_node(root, 1.3);
+    tree.add_sub_node(root, 1.4);
+
+    auto& children = root->get_children();
+    tree.add_sub_node(children[0], 1.5);
+    tree.add_sub_node(children[0], 1.6);
+    tree.add_sub_node(children[1], 1.7);
+    tree.add_sub_node(children[1], 1.8);
+    tree.add_sub_node(children[2], 1.9);
+
+    vector<double> values;
+    for (auto it = tree.begin_post_order(); it != tree.end_post_order(); ++it) {
+        values.push_back(*it);
+    }
+
+    vector<double> expected = {1.5, 1.6, 1.2, 1.7, 1.8, 1.3, 1.9, 1.4, 1.1};
+    CHECK(values == expected);
+}
+TEST_CASE("Test PreOrderIterator with Large Tree") {
+    Tree<int> tree(3);
+    tree.add_root(1);
+    auto root = tree.get_root();
+    tree.add_sub_node(root, 2);
+    tree.add_sub_node(root, 3);
+    tree.add_sub_node(root, 4);
+
+    auto& children = root->get_children();
+    tree.add_sub_node(children[0], 5);
+    tree.add_sub_node(children[0], 6);
+    tree.add_sub_node(children[1], 7);
+    tree.add_sub_node(children[1], 8);
+    tree.add_sub_node(children[2], 9);
+
+    vector<int> values;
+    for (auto it = tree.begin_pre_order(); it != tree.end_pre_order(); ++it) {
+        values.push_back(*it);
+    }
+
+    vector<int> expected = {1, 2, 5, 6, 3, 7, 8, 4, 9};
+    CHECK(values == expected);
+}
+
+TEST_CASE("Test PostOrderIterator with Only Root Node") {
+    Tree<int> tree;
+    tree.add_root(1);
+    vector<int> values;
+    for (auto it = tree.begin_post_order(); it != tree.end_post_order(); ++it) {
+        values.push_back(*it);
+    }
+    vector<int> expected = {1};
+    CHECK(values == expected);
+}
+
+
+TEST_CASE("Test PostOrderIterator with Two Levels") {
+    Tree<int> tree(2);
+    tree.add_root(1);
+    auto root = tree.get_root();
+    tree.add_sub_node(root, 2);
+    tree.add_sub_node(root, 3);
+
+    vector<int> values;
+    for (auto it = tree.begin_post_order(); it != tree.end_post_order(); ++it) {
+        values.push_back(*it);
+    }
+
+    vector<int> expected = {2, 3, 1};
+    CHECK(values == expected);
+}
+
+
+TEST_CASE("Test PostOrderIterator with Large Tree") {
+    Tree<int> tree(3);
+    tree.add_root(1);
+    auto root = tree.get_root();
+    tree.add_sub_node(root, 2);
+    tree.add_sub_node(root, 3);
+    tree.add_sub_node(root, 4);
+
+    auto& children = root->get_children();
+    tree.add_sub_node(children[0], 5);
+    tree.add_sub_node(children[0], 6);
+    tree.add_sub_node(children[1], 7);
+    tree.add_sub_node(children[1], 8);
+    tree.add_sub_node(children[2], 9);
+
+    vector<int> values;
+    for (auto it = tree.begin_post_order(); it != tree.end_post_order(); ++it) {
+        values.push_back(*it);
+    }
+
+    vector<int> expected = {5, 6, 2, 7, 8, 3, 9, 4, 1};
+    CHECK(values == expected);
+}
+
 
 

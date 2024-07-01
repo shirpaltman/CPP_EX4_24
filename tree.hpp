@@ -106,14 +106,14 @@ public:
         if (nodeStack.empty()) return *this;
         auto node = nodeStack.top();
         nodeStack.pop();
-         const auto& children = node->get_children();
+        const auto& children = node->get_children();
         for (auto rit = children.rbegin(); rit != children.rend(); ++rit) {
             nodeStack.push(*rit);
         }
         return *this;
     }
 
-    T operator*() const {
+     const T& operator*() const {
         return nodeStack.top()->get_data();
     }
 };
@@ -207,45 +207,51 @@ class PostOrderIterator {
 
     class InOrderIterator {
     private:
-        std::stack<std::shared_ptr<Node<T>>> stack;
-        std::shared_ptr<Node<T>> currentNode;
+        stack<shared_ptr<Node<T>>> stack;
+        shared_ptr<Node<T>> currentNode;
+
 
     public:
-        InOrderIterator(std::shared_ptr<Node<T>> node) : currentNode(node) {
+        InOrderIterator(shared_ptr<Node<T>> node):currentNode(node)  {
             pushLeftMost(node); // Initially push all left children to stack
+       
         }
 
-        void pushLeftMost(std::shared_ptr<Node<T>> node) {
-            // Push all left children to the stack
-            while (node != nullptr) {
-                stack.push(node);
-                if (!node->children.empty()) {
-                    node = node->children[0]; // Assuming left child is always the first child
+        void pushLeftMost(shared_ptr<Node<T>> node) {
+            auto n = node;
+            while (n != nullptr) {
+                stack.push(n);
+                if (!n->children.empty()) {
+                    n = n->children[0];  // Push leftmost children to the stack
                 } else {
-                    break; // No more children, stop the loop
+                    break;
                 }
             }
         }
 
+        
+
         bool operator!=(const InOrderIterator& other) const {
-            return !stack.empty(); // Continue until stack is not empty
-        }
+            return !stack.empty(); // Continue until stack is not empty        
+            }
 
         InOrderIterator& operator++() {
-            shared_ptr<Node<T>> node = stack.top();
+            if (stack.empty()) return *this;
+
+            auto node = stack.top();
             stack.pop();
+
             if (node->children.size() > 1) {
-                pushLeftMost(node->children[1]); // Assuming right child is the second child
+                pushLeftMost(node->children[1]);  // Push the leftmost nodes of the right subtree
             }
+
             return *this;
         }
-
-        T& operator*() const {
-            return stack.top()->data;
+        const T& operator*() const {
+                return stack.top()->data;
         }
-    
-};
 
+    };
 
 class DFSIterator{
     private:
