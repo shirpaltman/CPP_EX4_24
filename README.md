@@ -37,15 +37,15 @@ This C++ library provides a comprehensive solution for creating, visualizing, an
 
 ## Project Structure
 
-.
-├── src
+tree-visualization/
+├── src/
 │   ├── tree.cpp
 │   ├── node.cpp
 │   ├── Demo.cpp
 │   ├── Test.cpp
 │   ├── TestCounter.cpp
 │   └── TreeVisualizer.cpp
-├── include
+├── include/
 │   ├── tree.hpp
 │   ├── node.hpp
 │   └── TreeVisualizer.hpp
