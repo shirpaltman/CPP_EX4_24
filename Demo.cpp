@@ -1,6 +1,8 @@
-/**
- * Demo app for Ex4
- */
+/*
+Author:Shir Altman
+ID:325168870
+Email: shirpaltman@gmail.com
+*/
 #include <iostream>
 #include <memory>
 #include <string>

@@ -1,3 +1,11 @@
+/*
+Author:Shir Altman
+ID:325168870
+Email: shirpaltman@gmail.com
+*/
+
+
+
 #include "doctest.hpp"
 #include "tree.hpp"
 #include "Complex.hpp"  // Assuming Complex class is in Complex.hpp

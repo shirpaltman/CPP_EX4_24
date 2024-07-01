@@ -1,3 +1,10 @@
+/*
+Author:Shir Altman
+ID:325168870
+Email: shirpaltman@gmail.com
+*/
+
+
 #ifndef TREE_VISUALIZER_HPP
 #define TREE_VISUALIZER_HPP
 
