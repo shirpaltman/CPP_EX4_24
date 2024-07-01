@@ -1,33 +1,101 @@
-עצים - STL, Templates, and Iterators
+# 🌳 Tree Visualization and Traversal Library 🌳
 
-עץ הוא גרף קשיר ללא מעגלים. באלגוריתמים 1 למדתם על אלגוריתמים לסריקה של גרף (כמו BFS ו-DFS). במטלה הזאת אתם תממשו קונטיינר המייצג עץ k-ארי (עץ k-ארי הוא עץ שבו לכל קודקוד יש לכל היותר k ילדים. למשל, עץ בינארי הוא עץ 2-ארי.) גנרי שמכיל מפתחות מכל סוג (למשל מספרים, מחרוזות ומחלקות). המצב הדיפולטיבי של העץ הוא עץ בינארי (כלומר k=2). בשלב היצירה של הקונטיינר עליכם יהיה לציין את הסוג של המפתחות שהוא מכיל ואת מספר הילדים המקסימלי שיכול להיות לכל קודקוד. אם המספר הזה לא צוין, העץ יהיה עץ בינארי. עליכם לממש את האיטרטורים הבאים:
+## Author Information
 
-    איטרטור Pre-Order - איטרטור הסורק את העץ בצורה הבאה: צומת נוכחית -> תת עץ שמאלי -> תת עץ ימני (האיטרטור הזה עובד בצורה הזאת עבור עץ בינארי בלבד! עבור עץ כללי החזירו סריקת DFS רגילה שמתחילה מהשורש של העץ).
-    איטרטור Post-Order - איטרטור הסורק את העץ בצורה הבאה: תת עץ שמאלי -> תת עץ ימני -> צומת נוכחית (האיטרטור הזה עובד בצורה הזאת עבור עץ בינארי בלבד! עבור עץ כללי החזירו סריקת DFS רגילה שמתחילה מהשורש של העץ).
-    איטרטור In-Order - איטרטור הסורק את העץ בצורה הבאה: תת עץ שמאלי -> צומת נוכחית -> תת עץ ימני (האיטרטור הזה עובד בצורה הזאת עבור עץ בינארי בלבד! עבור עץ כללי החזירו סריקת DFS רגילה שמתחילה מהשורש של העץ).
-    איטרטור BFS - סריקת העץ לרוחב (משמאלי לימין) (עובד על עץ כללי).
-    איטרטור DFS - סריקת העץ בעזרת אלגוריתם DFS (עובד על עץ כללי).
-    איטרטור Heap - הפיכת עץ בינארי לערימת מינימום, לקריאה נוספת: https://he.wikipedia.org/wiki/%D7%A2%D7%A8%D7%99%D7%9E%D7%94_%D7%91%D7%99%D7%A0%D7%90%D7%A8%D7%99%D7%AA (פה אתם יכולים באלגוריתמים של הספרייה התקנית).
+- **Author**: Shir Altman
+- **ID**: 325168870
+- **Email**: shirpaltman@gmail.com
 
-שם הקונטיינר צריך להיות tree. יש להגדיר את המתודות הבאות:
+---
 
-    המתודה add_root - הוספת השורש של העץ. המתודה מקבלת צומת כלשהו ושמה אותו בשורש העץ.
-    המתודה add_sub_node - הוספת ילד לאב. המתודה מקבלת צומת בעץ וצומת כלשהו ויוצרת בן עבור אותו צומת.
-    המתודות begin_pre_order, end_pre_order. המתודות מחזירות איטרטורים לצורך מעבור על העץ בשיטת Pre-Order.
-    המתודות begin_post_order, end_post_order. המתודות מחזירות איטרטורים לצורך מעבור על העץ בשיטת Post-Order.
-    המתודות begin_in_order, end_in_order. המתודות מחזירות איטרטורים לצורך מעבור על העץ בשיטת In-Order.
-    המתודות begin_bfs_scan, end_bfs_scan. המתודות מחזירות איטרטורים לצורך מעבור על העץ בעזרת האלגוריתם BFS.
-    המתודות begin_dfs_scan, end_dfs_scan. המתודות מחזירות איטרטורים לצורך מעבור על העץ בעזרת האלגוריתם DFS.
-    המתודה myHeap. המתודה הופכת עץ בינארי לערימת מינימום וחזירה איטרטורים עבור הערימה שהתקבלה.
-    יש לממש מפרק (Destructor) המוחק את כל העץ.
-    פונקציית הדפסה. ההדפסה תתבצע בעזרת GUI. עליכם ליצור ממשק שמדפיס את העץ על המסך בצורה הגיוניות לשיקולכם.
+## Overview
 
-יש לכתוב קובץ main שבו אתם מדגימים את אופן פעולת התוכנית. עליכם לכתוב מחלקה בשם Complex (המייצגת מספרים מדומים) ולהשתמש גם בה כדי להדגים את הקוד שלכם. (למדתם על המחלקה הזאת בתרגולים).
+This C++ library provides a comprehensive solution for creating, visualizing, and traversing general trees. The library includes functionalities for node addition, tree traversal, visualization using SFML, and heapification.
 
-בנוסף, עליכם לכתוב בדיקות מקיפות לקוד שלכם.
+---
 
-כדי להשתמש ב-GUI אתם יכולים להיעזר בספרייה הבאה: https://wiki.qt.io/Qt_for_Beginners ובמדריך: https://www.youtube.com/watch?v=cXojtB8vS2E. כמובן שאתם יכולים להשתמש בכל ספרייה שאתם רוצים.
+## Project Structure
 
-יש להוסיף קובץ Makefile כאשר הפקודה make tree מריצה את התוכנית הראשית שלכם. עליכם להגיש קובץ README המסביר את ההיררכיה של המחלקות ובאילו ספריות השתמשתם. כמו כן, עליכם לכתוב בתחילת כל קובץ את המייל שלכם. אי עמידה בהנחיות תגרור הפחתה בציון.
 
-בהצלחה!
+markdown
+
+# 🌳 Tree Visualization and Traversal Library 🌳
+
+## Author Information
+
+- **Author**: Shir Altman
+- **ID**: 325168870
+- **Email**: shirpaltman@gmail.com
+
+---
+
+## Overview
+
+This C++ library provides a comprehensive solution for creating, visualizing, and traversing general trees. The library includes functionalities for node addition, tree traversal, visualization using SFML, and heapification.
+
+---
+
+## Project Structure
+
+.
+├── src
+│ ├── tree.cpp
+│ ├── node.cpp
+│ ├── Demo.cpp
+│ ├── Test.cpp
+│ └── TreeVisualizer.cpp
+├── include
+│ ├── tree.hpp
+│ ├── node.hpp
+│ ├── TreeVisualizer.hpp
+├── Makefile
+├── README.md
+└── .gitignore
+
+
+---
+
+## Features
+
+- **Tree Construction**: Create trees with a configurable number of children per node.
+- **Node Management**: Add root and sub-nodes.
+- **Traversal Iterators**: Includes Pre-order, In-order, Post-order, BFS, and DFS iterators.
+- **Visualization**: Visualize the tree structure using SFML.
+- **Heapification**: Convert the tree into a heap.
+
+---
+
+## Classes and Their Responsibilities
+
+### `Tree`
+
+The `Tree` class is responsible for managing the tree structure, including adding nodes and traversing the tree.
+
+#### Key Methods:
+
+- `add_root(const T& data)`: Adds the root node.
+- `get_root()`: Returns the root node.
+- `add_sub_node(shared_ptr<Node<T>>& parent_node, const T& data)`: Adds a sub-node to the specified parent node.
+- `printTree()`: Prints the tree.
+- `heapify(shared_ptr<Node<T>> node)`: Heapifies the subtree.
+- `myHeap()`: Heapifies the entire tree.
+
+### Iterators
+
+- **PreOrderIterator**: Traverse the tree in pre-order.
+- **InOrderIterator**: Traverse the tree in in-order.
+- **PostOrderIterator**: Traverse the tree in post-order.
+- **BFSIterator**: Traverse the tree in breadth-first order.
+- **DFSIterator**: Traverse the tree in depth-first order.
+
+### `TreeVisualizer`
+
+The `TreeVisualizer` class is responsible for visualizing the tree structure using the SFML library.
+
+#### Key Methods:
+
+- `showTree(const shared_ptr<Node<T>>& root, RenderWindow& window, const Font& font)`: Visualizes the tree starting from the root.
+- `drawTree(RenderWindow& window, shared_ptr<Node<T>> node, const Font& font, int x, int y, int level)`: Recursively draws the tree nodes and edges.
+
+---
+
