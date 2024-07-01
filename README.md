@@ -39,18 +39,20 @@ This C++ library provides a comprehensive solution for creating, visualizing, an
 
 .
 ├── src
-│ ├── tree.cpp
-│ ├── node.cpp
-│ ├── Demo.cpp
-│ ├── Test.cpp
-│ └── TreeVisualizer.cpp
+│   ├── tree.cpp
+│   ├── node.cpp
+│   ├── Demo.cpp
+│   ├── Test.cpp
+│   ├── TestCounter.cpp
+│   └── TreeVisualizer.cpp
 ├── include
-│ ├── tree.hpp
-│ ├── node.hpp
-│ ├── TreeVisualizer.hpp
+│   ├── tree.hpp
+│   ├── node.hpp
+│   └── TreeVisualizer.hpp
 ├── Makefile
 ├── README.md
 └── .gitignore
+
 
 
 ---
