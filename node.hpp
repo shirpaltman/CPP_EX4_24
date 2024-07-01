@@ -20,15 +20,31 @@ public:
     void add_child(shared_ptr<Node<T>> child){
         children.push_back(child);
     }
+
+
+     /**
+     * @brief Get the data stored in the node (const version).
+     * @return The data stored in the node.
+     */
      const T& get_data() const {
         return data;
     }
 
-    // Return a modifiable list of children
+    
+    
+    /**
+     * @brief Get a modifiable list of children.
+     * @return The list of child nodes.
+     */
     vector<shared_ptr<Node<T>>>& get_children()  {
         return children;
     }
 
+
+    /**
+     * @brief Get a non-modifiable list of children.
+     * @return The list of child nodes.
+     */
     const vector<shared_ptr<Node<T>>>& get_children()const{
         return children;
     }
